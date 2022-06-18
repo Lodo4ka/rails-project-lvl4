@@ -15,7 +15,7 @@ module Web
     def new
       authorize Repository
       @repository = current_user.repositories.build
-      repositories = ApplicationContainer[:api_service].new(current_user.token).list_repositories
+      repositories = ApplicationContainer[:api_service].list_repositories(current_user.token)
       permitted_languages = Repository.language.values
       @permitted_repositories = repositories.select do |repository|
         repository if repository['language']&.downcase.in?(permitted_languages) &&
@@ -26,13 +26,13 @@ module Web
     def create
       authorize Repository
       @repository = current_user.repositories.build(repository_params)
-      notice = 'failed'
       if @repository.save
         RepositoryInfoJob.perform_later(@repository)
         CreateGithubWebhookJob.perform_later(@repository)
-        notice = 'successfull'
+        redirect_to repositories_path, notice: t('repository_creation.successfull')
+      else
+        render :new, alert: t('repository_creation.failed')
       end
-      redirect_to repositories_path, notice: t("repository_creation.#{notice}")
     end
 
     private

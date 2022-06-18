@@ -7,8 +7,9 @@ en:
   authorization_failed: Authorization failed
   check: Check
   check_creation:
-    successfull: New check was successfully created
     failed: New check was not crated due to errors
+    language_error: New check was not created because language is undeterminded or not supported
+    successfull: New check was successfully created
   check_passed: Check passed
   check_title: "Check #%{id}"
   created_at: Created at

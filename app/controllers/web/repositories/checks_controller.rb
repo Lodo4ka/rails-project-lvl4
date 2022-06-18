@@ -10,14 +10,17 @@ module Web
 
       def create
         @repository = Repository.find(params[:repository_id])
+        if @repository.language.nil?
+          redirect_to @repository, alert: t('check_creation.language_error')
+        end
         @check = @repository.checks.build
         authorize @check
-        notice = 'failed'
         if @check.save
           CheckRepositoryJob.perform_later(@check)
-          notice = 'successfull'
+          redirect_to @repository, notice: t('check_creation.successfull')
+        else
+          redirect_to @repository, alert: t('check_creation.failed')
         end
-        redirect_to @repository, notice: t("check_creation.#{notice}")
       end
     end
   end

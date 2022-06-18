@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 class RepositoryManager
-  attr_reader :repository, :repository_storage
-
-  def initialize(repository)
-    @repository = repository
-    @repository_storage = Rails.root.join("tmp/repos/#{repository.full_name}")
+  def self.clone_repository(repository)
+    Open3.capture3("git clone #{repository.clone_url} #{repository_storage(repository)}")
   end
 
-  def clone_repository
-    Open3.capture3("git clone #{repository.clone_url} #{repository_storage}")
+  def self.remove_tmp_repository(repository)
+    Open3.capture3("rm -rf #{repository_storage(repository)}")
   end
 
-  def remove_tmp_repository
-    Open3.capture3("rm -rf #{repository_storage}")
+  def self.repository_storage(repository)
+    Rails.root.join("tmp/repos/#{repository.full_name}")
   end
 end

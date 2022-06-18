@@ -4,6 +4,6 @@ class CreateGithubWebhookJob < ApplicationJob
   queue_as :default
 
   def perform(repository)
-    ApplicationContainer[:api_service].new(repository.user.token).create_hook(repository.github_id)
+    ApplicationContainer[:api_service].create_hook(repository.user.token, repository.github_id)
   end
 end

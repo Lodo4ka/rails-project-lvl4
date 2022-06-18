@@ -1,23 +1,19 @@
 # frozen_string_literal: true
 
 class GithubApiServiceStub
-  attr_reader :client
-
-  def initialize(_token); end # rubocop:disable
-
-  def fetch_last_commit(_github_id)
+  def self.fetch_last_commit(_token, _github_id)
     { reference_url: Faker::Internet.url, reference_sha: Faker::Crypto.sha1 }
   end
 
-  def list_repositories
+  def self.list_repositories(_token)
     JSON.parse(File.read('test/fixtures/files/repositories.json'))
   end
 
-  def fetch_repository_info(_github_id)
+  def self.fetch_repository_info(_token, _github_id)
     JSON.parse(File.read('test/fixtures/files/repository.json'))
   end
 
-  def create_hook(_github_id)
+  def self.create_hook(_token, _github_id)
     JSON.parse(File.read('test/fixtures/files/webhook_response.json'))
   end
 end
