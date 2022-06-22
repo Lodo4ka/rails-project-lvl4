@@ -2,7 +2,7 @@
 
 class RepositoryChecker
   def self.run_check(repository)
-    commands = { 'javascript' => 'npx eslint', 'ruby' => 'rubocop' }
+    commands = { 'javascript' => 'node_modules/eslint/bin/eslint.js', 'ruby' => 'bundle exec rubocop' }
     configs = { 'javascript' => '.eslintrc.json', 'ruby' => '.rubocop.yml' }
     repositories_storage = Rails.root.join("tmp/repos/#{repository.full_name}/")
     language = repository.language
