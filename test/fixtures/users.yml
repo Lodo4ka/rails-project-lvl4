@@ -4,8 +4,3 @@ one:
   email: <%= Faker::Internet.email %>
   nickname: <%= Faker::Internet.username %>
   token: <%= Faker::Internet.uuid %>
-
-two:
-  email: <%= Faker::Internet.email %>
-  nickname: <%= Faker::Internet.username %>
-  token: <%= Faker::Internet.uuid %>

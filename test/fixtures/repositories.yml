@@ -11,10 +11,10 @@ javascript:
 ruby:
   name: <%= Faker::Lorem.word %>
   language: ruby
-  user: two
+  user: one
   github_id: <%= Faker::Number.number(digits: 9) %>
   clone_url: <%= Faker::Internet.url %>
-  full_name: two/two
+  full_name: one/two
 
 without_info:
   user: one

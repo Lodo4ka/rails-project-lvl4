@@ -28,13 +28,15 @@ module Web
     end
 
     test 'should create new repository' do
+      github_id = Faker::Number.number(digits: 9)
       assert_difference 'Repository.count' do
-        post repositories_path, params: { repository: { github_id: 3 } }
+        post repositories_path, params: { repository: { github_id: github_id } }
       end
 
-      assert { Repository.find_by(github_id: 3) }
-      assert_enqueued_with(job: RepositoryInfoJob)
-      assert_enqueued_with(job: CreateGithubWebhookJob)
+      repository = Repository.find_by(github_id: github_id)
+      assert { repository }
+      assert { repository.name }
+      assert { repository.language }
       assert_redirected_to repositories_path
     end
   end

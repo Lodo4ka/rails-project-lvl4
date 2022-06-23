@@ -12,6 +12,11 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
+    setup do
+      queue_adapter.perform_enqueued_jobs = true
+      queue_adapter.perform_enqueued_at_jobs = true
+    end
+
     def config_omniauth(user)
       OmniAuth.config.test_mode = true
       OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(

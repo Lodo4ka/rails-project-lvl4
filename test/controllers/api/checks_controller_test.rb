@@ -9,7 +9,7 @@ module Api
       post api_checks_path, params: { repository: { full_name: repository.full_name } }
 
       assert { Repository::Check.last.repository == repository }
-      assert_enqueued_with(job: CheckRepositoryJob)
+
       assert_response :success
     end
   end
