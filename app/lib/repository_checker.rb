@@ -8,6 +8,7 @@ class RepositoryChecker
     repositories_storage = Rails.root.join("tmp/repos/#{repository.full_name}/")
     language = repository.language
     options = "--config ./#{configs[language]} --format json"
-    Open3.capture3("#{commands[language]} #{repositories_storage} #{options}").first
+    additional_options = { 'javascript' => '--no-eslintrc'}
+    Open3.capture3("#{commands[language]} #{repositories_storage} #{options} #{additional_options[language]}").first
   end
 end

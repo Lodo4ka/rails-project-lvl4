@@ -2,6 +2,8 @@
 
 class JavascriptOutputParser
   def self.parse_linter_output(output)
+    return output if output.blank?
+
     errors_info = {}
     JSON.parse(output).each do |offenses_in_file|
       next if offenses_in_file['messages'].empty?
