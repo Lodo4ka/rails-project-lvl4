@@ -7,8 +7,8 @@ class RepositoryChecker
     configs = { 'javascript' => '.eslintrc.json', 'ruby' => '.rubocop.yml' }
     repositories_storage = Rails.root.join("tmp/repos/#{repository.full_name}/")
     language = repository.language
-    options = "--config ./#{configs[language]} --format json"
-    additional_options = { 'javascript' => '--no-eslintrc'}
-    Open3.capture3("#{commands[language]} #{repositories_storage} #{options} #{additional_options[language]}").first
+    additional_options = { 'javascript' => '--no-eslintrc' }
+    options = "--config ./#{configs[language]} --format json #{additional_options[language]}"
+    Open3.capture3("#{commands[language]} #{repositories_storage} #{options}").first
   end
 end
